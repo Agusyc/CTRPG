@@ -83,7 +83,7 @@ void Battle::attack() {
     int damage = (attack.damage + attack.magicDamage + player.attack) - enemy.defense;
 
     stringstream ss;
-    ss << "You deal " << damage << " to " << enemy.name << " with " << attack.name  << "!" << endl << "It now has " << enemy.hp - damage << " HP.";
+    ss << "You deal " << damage << " to " << enemy.name << " with " << attack.name  << "!" << endl << "It now has " << enemy.hp - damage << " HP." << endl;
 
     printMessage(ss.str(), QUICK_TEXT);
 
@@ -92,15 +92,32 @@ void Battle::attack() {
     stringstream ss;
     ss << enemy.name << " has to attack!";
 
-    bool enemyAttacks = rand() & 1;
+    printMessage(ss.str());
+    
+    bool enemyAttacks = rand() & 2;
     if (enemyAttacks) {
 	int randNum = rand()%(1-0 + 1) + 0;
 	Attack attack = enemy.attacks.at(randNum);
 
 	int damage = (attack.damage + attack.magicDamage + enemy.attack) - player.defense;
 
-	stringstream ss;
-	ss << enemy.name << " deals you " << damage << " with " << attack.name << "!"  << endl << "You now have " << player.hp - damage << "HP.";
+	if (defending)
+	  damage -= player.shieldDefense;
+
+	bool critical = false;
+	// 5 % chance of a critical hit
+        randNum = rand() % 100;
+	if (randNum < 5) {
+	  critical = true;
+	  damage *= 2;
+	}
+	
+	ss.str("");
+	ss.clear();
+
+	if (critical)
+	  ss << "With a critical hit, ";
+	ss << enemy.name << " deals you " << damage << " with " << attack.name << "!"  << endl << "You now have " << player.hp - damage << " HP.";
 
 	printMessage(ss.str(), QUICK_TEXT);
 

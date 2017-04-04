@@ -10,13 +10,13 @@ struct Attack {
 
 struct Enemy {
   string name;
-  int attack, defense, stamina, hp, xp;
+  int attack, defense, shieldDefense, stamina, hp, xp;
   vector<Attack> attacks;
 };
 
 struct Player {
   string name;
-  int attack, defense, mana, stamina, hp, level, xp, goal;
+  int attack, defense, shieldDefense, mana, stamina, hp, level, xp, goal;
   vector<Attack> attacks;
 };
 
