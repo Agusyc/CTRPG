@@ -15,7 +15,7 @@ void printMessage(string message, int time, int extraTime, bool newLine) {
   }
 }
 
-void newLine() {
+void clearScreen(int waitTime) {
+  usleep(waitTime * 1000);
   cout << "\033[2J\033[1;1H";
-  system("pause");
 }

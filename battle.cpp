@@ -43,6 +43,9 @@ void Battle::loop() {
     }
 	playerTurn = !playerTurn;
   }
+
+  // TODO: The battle is over:
+  clearScreen();
 }
 
 int Battle::showMenu() {
@@ -50,6 +53,9 @@ int Battle::showMenu() {
   
   int choice;
   cin >> choice;
+
+  cout << endl;
+  
   return choice;
 }
 
@@ -68,6 +74,8 @@ void Battle::attack() {
     int choice;
     cin >> choice;
 
+    cout << endl;
+    
     Attack attack = player.attacks.at(choice - 1);
 
     int damage = (attack.damage + attack.magicDamage + player.attack) - enemy.defense;
@@ -79,12 +87,33 @@ void Battle::attack() {
 
     enemy.hp -= damage;
   } else {
+    stringstream ss;
+    ss << enemy.name << " has to attack!";
+
+    printMessage(ss.str());
+
+    sleep(1);
+
+    printMessage("It doesn't seem very active...");
     // TODO: The enemy attacks.
   }
 
   if (enemy.hp <= 0) {
     printMessage("You win!");
     over = true;
+    if (player.xp + enemy.xp < player.goal) {
+      player.xp += enemy.xp;
+    } else if (player.xp + enemy.xp >= player.goal) {
+      stringstream ss;
+
+      ss << "You leveled up! You are on level " << player.level + 1 << " now!";
+
+      player.xp = player.goal - player.xp;
+
+      printMessage(ss.str());
+
+      player.level++;
+    }
   }
 
   if (player.hp <= 0) {

@@ -2,13 +2,14 @@
 
 Player player = {
 	"Agus",
-	1,
+	9,
 	1,
 	0,
 	0,
 	10,
 	1,
-	0
+	0,
+	10
 };
 
 Enemy enemy = {
@@ -16,6 +17,7 @@ Enemy enemy = {
 	1,
 	1,
 	0,
+	10,
 	10
 };
 

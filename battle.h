@@ -5,7 +5,7 @@
 
 struct Enemy {
   string name;
-  int attack, defense, stamina, hp;
+  int attack, defense, stamina, hp, xp;
 };
 
 struct Attack {
@@ -15,7 +15,7 @@ struct Attack {
 
 struct Player {
   string name;
-  int attack, defense, mana, stamina, hp, level, xp;
+  int attack, defense, mana, stamina, hp, level, xp, goal;
   vector<Attack> attacks;
 };
 
