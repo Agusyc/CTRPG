@@ -1,7 +1,20 @@
-#include "utils.h"
+#include "battle.h"
+
+Player player;
+Enemy enemy;
+
+void init() {
+  enemy.name = "testing name lol xd";
+}
 
 int main() {
-  printMessage("Welcome to CTRPG!", 150, 0, true);
-  
+  init();
+
+  printMessage("Welcome to CTRPG!");
+
+  Battle testBattle(enemy, player);
+
+  testBattle.start("This is a test!");
+
   return 0;
 }
