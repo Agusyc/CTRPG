@@ -1,4 +1,7 @@
 #include "utils.h"
+#include <string>
+#include <vector>
+#include <sstream>
 
 struct Enemy {
   string name;
@@ -13,7 +16,7 @@ struct Attack {
 struct Player {
   string name;
   int attack, defense, mana, stamina, hp, level, xp;
-  Attack[] attacks;
+  vector<Attack> attacks;
 };
 
 class Battle {
@@ -21,10 +24,11 @@ class Battle {
   Player player;
   Enemy enemy;
   void loop();
-  void attack(Attack attack);
-  void showMenu();
+  void attack();
+  int showMenu();
   bool over = false;
   bool playerTurn = true;
+  bool defending = false;
  public:
   Battle(Enemy enm, Player ply);
   void start(string message);

@@ -1,7 +1,8 @@
+#pragma once
+
 #include <ncurses.h>
 #include <iostream>
 #include <unistd.h>
-#include <string>
 
 #define SLOW_TEXT 200
 #define NORMAL_TEXT 65

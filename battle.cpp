@@ -16,32 +16,79 @@ void Battle::start(string message) {
 void Battle::loop() {
   while (!over) {
     if (playerTurn) {
+      // Checks the user response from the menu
       switch(showMenu()) {
       case 1:
-	// TODO: Show attacks menu
+	printMessage("You attack!", QUICK_TEXT);
+	attack();
 	break;
       case 2:
-	// TODO: Make bool defending and set to true here
+	defending = true;
+	printMessage("You use your shield to, like, defend yourself");
 	break;
       case 3:
 	// TODO: Show items menu
+	printMessage("You wanna use your stuff?");
 	break;
       case 4:
 	// TODO: See if player can flee
+	printMessage("Chicken!", QUICK_TEXT);
 	break;
-      case default:
+      default:
 	printMessage("That is not a valid option...");
 	continue;
       }
-      playerTurn = !playerTurn;
+    } else {
+      attack();
     }
+	playerTurn = !playerTurn;
   }
 }
 
-int Battle:showMenu() {
+int Battle::showMenu() {
   cout << "1. Attack" << endl << "2. Defend" << endl << "3. Item" << endl << "4. Flee" << endl << "Your choice: ";
-												  
+  
   int choice;
   cin >> choice;
-  return choice;					
+  return choice;
+}
+
+void Battle::attack() {
+  if (playerTurn) {
+    // The player attacks.
+    
+    cout << "Attacks: " << endl;
+    
+    for (unsigned int i = 0; i < player.attacks.size(); i++) {
+      cout << i+1 << ". " << player.attacks.at(i).name << endl;
+    }
+    
+    cout << "Your choice: ";
+    
+    int choice;
+    cin >> choice;
+
+    Attack attack = player.attacks.at(choice - 1);
+
+    int damage = (attack.damage + attack.magicDamage + player.attack) - enemy.defense;
+
+    stringstream ss;
+    ss << "You deal " << damage << " to " << enemy.name << "!" << endl << "It now has " << enemy.hp - damage << " HP.";
+
+    printMessage(ss.str(), QUICK_TEXT);
+
+    enemy.hp -= damage;
+  } else {
+    // TODO: The enemy attacks.
+  }
+
+  if (enemy.hp <= 0) {
+    printMessage("You win!");
+    over = true;
+  }
+
+  if (player.hp <= 0) {
+    printMessage("You lose!");
+    over = true;
+  }
 }

@@ -1,10 +1,32 @@
 #include "battle.h"
 
-Player player;
-Enemy enemy;
+Player player = {
+	"Agus",
+	1,
+	1,
+	0,
+	0,
+	10,
+	1,
+	0
+};
+
+Enemy enemy = {
+	"testing name lol",
+	1,
+	1,
+	0,
+	10
+};
 
 void init() {
-  enemy.name = "testing name lol xd";
+  Attack attack = {
+	"Little punch",
+	1,
+	0
+  };
+
+  player.attacks.push_back(attack);
 }
 
 int main() {
