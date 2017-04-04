@@ -2,7 +2,7 @@
 
 Player player = {
 	"Agus",
-	9,
+	1,
 	1,
 	0,
 	0,
@@ -13,7 +13,7 @@ Player player = {
 };
 
 Enemy enemy = {
-	"testing name lol",
+	"Badass enemy (Not really)",
 	1,
 	1,
 	0,
@@ -22,13 +22,30 @@ Enemy enemy = {
 };
 
 void init() {
-  Attack attack = {
+  Attack littlePunch = {
 	"Little punch",
-	1,
+	3,
 	0
   };
 
-  player.attacks.push_back(attack);
+  player.attacks.push_back(littlePunch);
+
+  Attack superPunch = {
+	"Super punch",
+	2,
+	0
+  };
+
+  enemy.attacks.push_back(superPunch);
+
+  Attack superLaserBeam  = {
+	"Super laser beam",
+	0,
+	5
+  };
+
+  enemy.attacks.push_back(superLaserBeam);
+
 }
 
 int main() {

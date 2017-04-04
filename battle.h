@@ -3,14 +3,15 @@
 #include <vector>
 #include <sstream>
 
-struct Enemy {
-  string name;
-  int attack, defense, stamina, hp, xp;
-};
-
 struct Attack {
   string name;
   int damage, magicDamage;
+};
+
+struct Enemy {
+  string name;
+  int attack, defense, stamina, hp, xp;
+  vector<Attack> attacks;
 };
 
 struct Player {

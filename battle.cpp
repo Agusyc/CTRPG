@@ -6,6 +6,8 @@ Battle::Battle(Enemy enm, Player ply) {
 }
 
 void Battle::start(string message) {
+  // Start the battle
+
   printMessage(message);
 
   printMessage(enemy.name + string(" wants to fight!"));
@@ -50,38 +52,38 @@ void Battle::loop() {
 
 int Battle::showMenu() {
   cout << "1. Attack" << endl << "2. Defend" << endl << "3. Item" << endl << "4. Flee" << endl << "Your choice: ";
-  
+
   int choice;
   cin >> choice;
 
   cout << endl;
-  
+
   return choice;
 }
 
 void Battle::attack() {
   if (playerTurn) {
     // The player attacks.
-    
+
     cout << "Attacks: " << endl;
-    
+
     for (unsigned int i = 0; i < player.attacks.size(); i++) {
       cout << i+1 << ". " << player.attacks.at(i).name << endl;
     }
-    
+
     cout << "Your choice: ";
-    
+
     int choice;
     cin >> choice;
 
     cout << endl;
-    
+
     Attack attack = player.attacks.at(choice - 1);
 
     int damage = (attack.damage + attack.magicDamage + player.attack) - enemy.defense;
 
     stringstream ss;
-    ss << "You deal " << damage << " to " << enemy.name << "!" << endl << "It now has " << enemy.hp - damage << " HP.";
+    ss << "You deal " << damage << " to " << enemy.name << " with " << attack.name  << "!" << endl << "It now has " << enemy.hp - damage << " HP.";
 
     printMessage(ss.str(), QUICK_TEXT);
 
@@ -90,12 +92,22 @@ void Battle::attack() {
     stringstream ss;
     ss << enemy.name << " has to attack!";
 
-    printMessage(ss.str());
+    bool enemyAttacks = rand() & 1;
+    if (enemyAttacks) {
+	int randNum = rand()%(1-0 + 1) + 0;
+	Attack attack = enemy.attacks.at(randNum);
 
-    sleep(1);
+	int damage = (attack.damage + attack.magicDamage + enemy.attack) - player.defense;
 
-    printMessage("It doesn't seem very active...");
-    // TODO: The enemy attacks.
+	stringstream ss;
+	ss << enemy.name << " deals you " << damage << " with " << attack.name << "!"  << endl << "You now have " << player.hp - damage << "HP.";
+
+	printMessage(ss.str(), QUICK_TEXT);
+
+	player.hp -= damage;
+    } else {
+	printMessage("But it is resting...");
+    }
   }
 
   if (enemy.hp <= 0) {
