@@ -1,0 +1,22 @@
+{
+    attack: {
+	id: 1
+	name: "Little Punch"
+	damage: 1,
+	magicDamage: 0
+    },
+
+    attack: {
+	id: 2
+	name: "Little Punch"
+	damage: 1,
+	magicDamage: 0
+    },
+
+    attack: {
+	id: 3
+	name: "Little Punch"
+	damage: 1,
+	magicDamage: 0
+    }
+}

@@ -1,0 +1,13 @@
+{    
+    enemy : {
+        id : 1,
+        name : "Badass Guy",
+        attack : 1,
+        defense : 1,
+        shieldDefense : 1,
+        stamina : 0,
+        hp : 10,
+        xp : 10,
+        attacks : [2, 3]
+    }
+}
