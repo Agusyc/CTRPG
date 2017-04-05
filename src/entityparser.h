@@ -1,11 +1,12 @@
 #include <ncurses.h>
 #include <iostream>
-#include "json.h"
-#include "json-forwards.h"
+#include <fstream>
+#include <json/value.h>
+#include <json/reader.h>
 #include "entities.h"
 
-Attack parseAttack(int id);
+Attack parseAttack(int index);
 
-Enemy parseEnemy(int id);
+Enemy parseEnemy(int index);
 
 Player parsePlayer();

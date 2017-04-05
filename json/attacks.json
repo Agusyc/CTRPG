@@ -1,22 +1,19 @@
-{
-    attack: {
-	id: 1
-	name: "Little Punch"
-	damage: 1,
-	magicDamage: 0
+[
+    {
+	"name": "Little Punch",
+	"damage": 2,
+	"magicDamage": 0
     },
 
-    attack: {
-	id: 2
-	name: "Little Punch"
-	damage: 1,
-	magicDamage: 0
+    {
+	"name": "Super Punch",
+	"damage": 3,
+	"magicDamage": 0
     },
 
-    attack: {
-	id: 3
-	name: "Little Punch"
-	damage: 1,
-	magicDamage: 0
+    {
+	"name": "Super Laser Beam",
+	"damage": 0,
+	"magicDamage": 5
     }
-}
+]
