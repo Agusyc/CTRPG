@@ -1,5 +1,7 @@
 #include "utils.h"
 
+using namespace std;
+
 void printMessage(string message, int time, int extraTime, bool newLine) {
   for (unsigned int i = 0; i < message.length(); i++) {
     cout << message.at(i);
@@ -17,5 +19,6 @@ void printMessage(string message, int time, int extraTime, bool newLine) {
 
 void clearScreen(int waitTime) {
   usleep(waitTime * 1000);
+  // These codes are ANSI escape codes, the terminal reads them and clears the screen
   cout << "\033[2J\033[1;1H";
 }

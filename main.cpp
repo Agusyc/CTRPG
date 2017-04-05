@@ -1,5 +1,8 @@
 #include "battle.h"
 
+using namespace std;
+
+// This struct represents the player's character
 Player player = {
   "Agus", // name
   1, // attack
@@ -13,6 +16,7 @@ Player player = {
   10 // goal
 };
 
+// Enemy, for testing purposes only
 Enemy enemy = {
   "Badass guy", // name
   1, // attack
@@ -23,9 +27,10 @@ Enemy enemy = {
   10 // xp
 };
 
+// Initializes eveything
 void init() {
   Attack littlePunch = {
-    "Little punch",
+    "Little Punch",
     3,
     0
   };
@@ -33,7 +38,7 @@ void init() {
   player.attacks.push_back(littlePunch);
   
   Attack superPunch = {
-    "Super punch",
+    "Super Punch",
     2,
     0
   };
@@ -41,7 +46,7 @@ void init() {
   enemy.attacks.push_back(superPunch);
   
   Attack superLaserBeam  = {
-    "Super laser beam",
+    "Super Laser Beam",
     0,
     5
   };
@@ -54,7 +59,8 @@ int main() {
   init();
   
   printMessage("Welcome to CTRPG!");
-  
+
+  // Just for testing the battle system
   Battle testBattle(enemy, player);
   
   testBattle.start("This is a test!");

@@ -3,21 +3,24 @@
 #include <vector>
 #include <sstream>
 
+// This struct represents an attack
 struct Attack {
-  string name;
+  std::string name;
   int damage, magicDamage;
 };
 
+// This struct represents an enemy
 struct Enemy {
-  string name;
+  std::string name;
   int attack, defense, shieldDefense, stamina, hp, xp;
-  vector<Attack> attacks;
+  std::vector<Attack> attacks;
 };
 
+// This struct is used only once, and represents the player.
 struct Player {
-  string name;
+  std::string name;
   int attack, defense, shieldDefense, mana, stamina, hp, level, xp, goal;
-  vector<Attack> attacks;
+  std::vector<Attack> attacks;
 };
 
 class Battle {
@@ -27,10 +30,11 @@ class Battle {
   void loop();
   void attack();
   int showMenu();
+  void showLevelUpMenu();
   bool over = false;
   bool playerTurn = true;
   bool defending = false;
  public:
   Battle(Enemy enm, Player ply);
-  void start(string message);
+  void start(std::string message);
 };

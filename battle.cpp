@@ -1,5 +1,7 @@
 #include "battle.h"
 
+using namespace std;
+
 Battle::Battle(Enemy enm, Player ply) {
   enemy = enm;
   player = ply;
@@ -16,6 +18,7 @@ void Battle::start(string message) {
 }
 
 void Battle::loop() {
+  // Run this loop until the user loses or wins
   while (!over) {
     if (playerTurn) {
       // Checks the user response from the menu
@@ -41,12 +44,13 @@ void Battle::loop() {
 	continue;
       }
     } else {
+      // The enemy attacks
       attack();
     }
-	playerTurn = !playerTurn;
+    // Pass to the next turn
+    playerTurn = !playerTurn;
   }
 
-  // TODO: The battle is over:
   clearScreen();
 }
 
@@ -62,22 +66,33 @@ int Battle::showMenu() {
 }
 
 void Battle::attack() {
+  unsigned int choice;
   if (playerTurn) {
     // The player attacks.
+    bool exitLoop = false;
 
-    cout << "Attacks: " << endl;
+    while (!exitLoop) {
+      cout << "Attacks: " << endl;
+      
+      for (unsigned int i = 0; i < player.attacks.size(); i++) {
+	cout << i+1 << ". " << player.attacks.at(i).name << endl;
+      }
+      
+      cout << "Your choice: ";
+      
+      cin >> choice;
+      
+      cout << endl;
+      
+      if (choice >= player.attacks.size() || choice < 0) {
+	printMessage("That's not a valid choice...");
+	cout << endl;
+	continue;
+      }
 
-    for (unsigned int i = 0; i < player.attacks.size(); i++) {
-      cout << i+1 << ". " << player.attacks.at(i).name << endl;
+      exitLoop = true;
     }
-
-    cout << "Your choice: ";
-
-    int choice;
-    cin >> choice;
-
-    cout << endl;
-
+    
     Attack attack = player.attacks.at(choice - 1);
 
     int damage = (attack.damage + attack.magicDamage + player.attack) - enemy.defense;
@@ -89,6 +104,7 @@ void Battle::attack() {
 
     enemy.hp -= damage;
   } else {
+    // The enemy attacks
     stringstream ss;
     ss << enemy.name << " has to attack!";
 
@@ -123,10 +139,12 @@ void Battle::attack() {
 
 	player.hp -= damage;
     } else {
-	printMessage("But it is resting...");
+      // The enemy decides not to attack
+      printMessage("But it is resting...");
     }
   }
 
+  // When the player wins
   if (enemy.hp <= 0) {
     printMessage("You win!");
     over = true;
@@ -142,11 +160,30 @@ void Battle::attack() {
       printMessage(ss.str());
 
       player.level++;
+      player.goal *= 2;
+
+      // To let the user choose what stats to improve
+      showLevelUpMenu();
     }
   }
 
+  // When the enemy wins
   if (player.hp <= 0) {
     printMessage("You lose!");
     over = true;
+  }
+}
+
+void Battle::showLevelUpMenu() {
+  for (int points = player.level; points != 0; points--) {
+    cout << "Points: " << points << endl << "1. HP" << endl << "2. Attack" << endl << "3. Defense" << endl << "4. Shield" << endl << "5. Mana" << "6. Stamina" << endl << "Your choice: ";
+
+    int choice;
+    
+    cin >> choice;
+    
+    switch (choice) {
+      // TODO: Check what the user chose and increase that stat. Do it with a switch.
+    }
   }
 }
