@@ -73,18 +73,20 @@ void Battle::attack() {
 
     while (!exitLoop) {
       cout << "Attacks: " << endl;
-      
+
       for (unsigned int i = 0; i < player.attacks.size(); i++) {
 	cout << i+1 << ". " << player.attacks.at(i).name << endl;
       }
-      
+
       cout << "Your choice: ";
-      
+
       cin >> choice;
-      
+
       cout << endl;
-      
-      if (choice >= player.attacks.size() || choice < 0) {
+
+	cout << "DEB: " << player.attacks.size() << " " << choice << endl;
+
+      if (choice > player.attacks.size() || choice < 0) {
 	printMessage("That's not a valid choice...");
 	cout << endl;
 	continue;
@@ -92,7 +94,7 @@ void Battle::attack() {
 
       exitLoop = true;
     }
-    
+
     Attack attack = player.attacks.at(choice - 1);
 
     int damage = (attack.damage + attack.magicDamage + player.attack) - enemy.defense;

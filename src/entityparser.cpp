@@ -17,9 +17,9 @@ Attack parseAttack(int index) {
 
   Attack attack;
 
-  attack.name = root[index]["name"];
-  attack.damage = root[index]["damage"];
-  attack.magicDamage = root[index]["magicDamage"];
+  attack.name = root[index]["name"].asString();
+  attack.damage = root[index]["damage"].asInt();
+  attack.magicDamage = root[index]["magicDamage"].asInt();
 
   return attack;
 }
@@ -41,16 +41,16 @@ Enemy parseEnemy(int index) {
 
   Enemy enemy;
 
-  enemy.name = jEnemy["name"];
-  enemy.attack = jEnemy["attack"];
-  enemy.defense = jEnemy["defense"];
-  enemy.shieldDefense = jEnemy["shieldDefense"];
-  enemy.stamina = jEnemy["stamina"];
-  enemy.hp = jEnemy["hp"];
-  enemy.xp = jEnemy["xp"];
+  enemy.name = jEnemy["name"].asString();
+  enemy.attack = jEnemy["attack"].asInt();
+  enemy.defense = jEnemy["defense"].asInt();
+  enemy.shieldDefense = jEnemy["shieldDefense"].asInt();
+  enemy.stamina = jEnemy["stamina"].asInt();
+  enemy.hp = jEnemy["hp"].asInt();
+  enemy.xp = jEnemy["xp"].asInt();
 
-  for (int i = 0; i < jEnemy["attacks"].size(); i++) {
-  	enemy.attacks.push_back(parseAttack(jEnemy["attacks"][i]));
+  for (unsigned int i = 0; i < jEnemy["attacks"].size(); i++) {
+  	enemy.attacks.push_back(parseAttack(jEnemy["attacks"][i].asInt()));
   }
 
   return enemy;
@@ -71,19 +71,19 @@ Player parsePlayer() {
 
   Player player;
 
-  player.name = jPlayer["name"];
-  player.attack = jPlayer["attack"];
-  player.defense = jPlayer["defense"];
-  player.shieldDefense = jPlayer["shieldDefense"];
-  player.mana = jPlayer["mana"];
-  player.stamina = jPlayer["stamina"];
-  player.hp = jPlayer["hp"];
-  player.xp = jPlayer["xp"];
-  player.level =jPlayer["level"];
-  player.goal = jPlayer["goal"];
+  player.name = jPlayer["name"].asString();
+  player.attack = jPlayer["attack"].asInt();
+  player.defense = jPlayer["defense"].asInt();
+  player.shieldDefense = jPlayer["shieldDefense"].asInt();
+  player.mana = jPlayer["mana"].asInt();
+  player.stamina = jPlayer["stamina"].asInt();
+  player.hp = jPlayer["hp"].asInt();
+  player.xp = jPlayer["xp"].asInt();
+  player.level =jPlayer["level"].asInt();
+  player.goal = jPlayer["goal"].asInt();
 
-  for (int i = 0; i < jPlayer["attacks"].size(); i++) {
-        player.attacks.push_back(parseAttack(jPlayer["attacks"][i]));
+  for (unsigned int i = 0; i < jPlayer["attacks"].size(); i++) {
+        player.attacks.push_back(parseAttack(jPlayer["attacks"][i].asInt()));
   }
 
   return player;

@@ -12,11 +12,9 @@ Enemy enemy;
 
 // Initializes eveything
 void init() {
-	Attack SuperPunch = parseAttack(1);
+	player = parsePlayer();
 
-	// parsePlayer();
-
-	// parseEnemy(1);
+	enemy = parseEnemy(0);
 }
 
 int main() {

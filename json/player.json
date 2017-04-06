@@ -1,13 +1,13 @@
 {
-    name: "Agus",
-    attack: 1,
-    defense: 1,
-    shieldDefense: 1,
-    mana: 0,
-    stamina: 0,
-    hp: 10,
-    level: 1,
-    xp: 0,
-    goal: 10,
-    attacks: [1]
+    "name": "Agus",
+    "attack": 1,
+    "defense": 1,
+    "shieldDefense": 1,
+    "mana": 0,
+    "stamina": 0,
+    "hp": 10,
+    "level": 1,
+    "xp": 0,
+    "goal": 10,
+    "attacks": [1]
 }
