@@ -24,12 +24,11 @@ void Battle::loop() {
       // Checks the user response from the menu
       switch(showMenu()) {
       case 1:
-	printMessage("You attack!", QUICK_TEXT);
 	attack();
 	break;
       case 2:
 	defending = true;
-	printMessage("You use your shield to, like, defend yourself");
+	printMessage("You use your shield to, like, defend yourself.");
 	break;
       case 3:
 	// TODO: Show items menu
@@ -70,6 +69,7 @@ void Battle::attack() {
   if (playerTurn) {
     // The player attacks.
     bool exitLoop = false;
+    Attack attack;
 
     while (!exitLoop) {
       cout << "Attacks: " << endl;
@@ -84,22 +84,47 @@ void Battle::attack() {
 
       cout << endl;
 
-	cout << "DEB: " << player.attacks.size() << " " << choice << endl;
-
       if (choice > player.attacks.size() || choice < 0) {
 	printMessage("That's not a valid choice...");
 	cout << endl;
 	continue;
       }
 
+      
+      
+      attack = player.attacks.at(choice - 1);
+      
+      if (player.mana < attack.mana) {
+	printMessage("You don't have enough mana to use that attack!");
+	continue;
+      }
+      
+      if (player.stamina < attack.stamina) {
+	printMessage("You don't have enough stamina to use that attack!");
+	continue;
+      }
+
       exitLoop = true;
     }
-
-    Attack attack = player.attacks.at(choice - 1);
-
+    
+    // Decrease the user mana and stamina
+    player.mana -= attack.mana;
+    player.stamina -= attack.stamina;
+    
+    // Calculate how much damage is dealt to the enemy
     int damage = (attack.damage + attack.magicDamage + player.attack) - enemy.defense;
+    
+    bool critical = false;
+    // 5 % chance of a critical hit
+    int randNum = rand() % 100;
+    if (randNum < 5) {
+      critical = true;
+      damage *= 2;
+    }
 
     stringstream ss;
+    if (critical)
+	ss << "With a critical hit, ";
     ss << "You deal " << damage << " to " << enemy.name << " with " << attack.name  << "!" << endl << "It now has " << enemy.hp - damage << " HP." << endl;
 
     printMessage(ss.str(), QUICK_TEXT);
@@ -111,12 +136,27 @@ void Battle::attack() {
     ss << enemy.name << " has to attack!";
 
     printMessage(ss.str());
-    
+
     bool enemyAttacks = rand() & 2;
     if (enemyAttacks) {
-	int randNum = rand()%(1-0 + 1) + 0;
-	Attack attack = enemy.attacks.at(randNum);
+	int randNum;
+	Attack attack;
+	bool exitLoop = false;
 
+	// This loop ensures that the enemy doesn't choose an attack that it can't use because of mana or stamina.
+	while (!exitLoop) {
+		randNum = rand()%(enemy.attacks.size()-0 + 1) + 0;
+		attack = enemy.attacks.at(randNum);
+
+		if (enemy.mana >= attack.mana && enemy.stamina >= attack.stamina)
+			exitLoop = true;
+	}
+
+	// Decrease enemy's mana and stamina
+	enemy.mana -= attack.mana;
+	enemy.stamina -= attack.stamina;
+
+	// Calculate how much damage is dealt to the player
 	int damage = (attack.damage + attack.magicDamage + enemy.attack) - player.defense;
 
 	if (defending)
@@ -129,7 +169,7 @@ void Battle::attack() {
 	  critical = true;
 	  damage *= 2;
 	}
-	
+
 	ss.str("");
 	ss.clear();
 
@@ -178,7 +218,7 @@ void Battle::attack() {
 
 void Battle::showLevelUpMenu() {
   for (int points = player.level; points != 0; points--) {
-    cout << "Points: " << points << endl << "1. HP" << endl << "2. Attack" << endl << "3. Defense" << endl << "4. Shield" << endl << "5. Mana" << "6. Stamina" << endl << "Your choice: ";
+    cout << "Points: " << points << endl << "1. HP" << endl << "2. Attack" << endl << "3. Defense" << endl << "4. Shield" << endl << "5. Mana" << endl << "6. Stamina" << endl << "Your choice: ";
 
     int choice;
     

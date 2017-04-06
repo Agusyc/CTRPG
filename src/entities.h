@@ -6,13 +6,13 @@
 // This struct represents an attack
 struct Attack {
   std::string name;
-  int damage, magicDamage;
+  int damage, magicDamage, mana, stamina;
 };
 
 // This struct represents an enemy
 struct Enemy {
   std::string name;
-  int attack, defense, shieldDefense, stamina, hp, xp;
+  int attack, defense, shieldDefense, mana, stamina, hp, xp;
   std::vector<Attack> attacks;
 };
 

@@ -15,11 +15,15 @@ Attack parseAttack(int index) {
 	  << reader.getFormattedErrorMessages();
   }
 
+  Json::Value jAttack = root[index];
+
   Attack attack;
 
-  attack.name = root[index]["name"].asString();
-  attack.damage = root[index]["damage"].asInt();
-  attack.magicDamage = root[index]["magicDamage"].asInt();
+  attack.name = jAttack["name"].asString();
+  attack.damage = jAttack["damage"].asInt();
+  attack.magicDamage = jAttack["magicDamage"].asInt();
+  attack.mana = jAttack["mana"].asInt();
+  attack.stamina = jAttack["stamina"].asInt();
 
   return attack;
 }
@@ -45,12 +49,14 @@ Enemy parseEnemy(int index) {
   enemy.attack = jEnemy["attack"].asInt();
   enemy.defense = jEnemy["defense"].asInt();
   enemy.shieldDefense = jEnemy["shieldDefense"].asInt();
+  enemy.mana = jEnemy["mana"].asInt();
   enemy.stamina = jEnemy["stamina"].asInt();
   enemy.hp = jEnemy["hp"].asInt();
   enemy.xp = jEnemy["xp"].asInt();
 
-  for (unsigned int i = 0; i < jEnemy["attacks"].size(); i++) {
-  	enemy.attacks.push_back(parseAttack(jEnemy["attacks"][i].asInt()));
+  // Iterates trough the array "attacks", which contains all the indexes of the attacks of the enemy
+  for (const Json::Value& attack : jEnemy["attacks"]) {
+    enemy.attacks.push_back(parseAttack(attack.asInt())); // Pushes the attack to the vector
   }
 
   return enemy;
@@ -82,8 +88,9 @@ Player parsePlayer() {
   player.level =jPlayer["level"].asInt();
   player.goal = jPlayer["goal"].asInt();
 
-  for (unsigned int i = 0; i < jPlayer["attacks"].size(); i++) {
-        player.attacks.push_back(parseAttack(jPlayer["attacks"][i].asInt()));
+  // Iterates trough the array "attacks", which contains all the indexes of the attacks of the player
+  for (const Json::Value& attack : jPlayer["attacks"]) { // "attack" is the current index
+    player.attacks.push_back(parseAttack(attack.asInt())); // Pushes the attack to the vector
   }
 
   return player;

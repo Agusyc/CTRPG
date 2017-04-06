@@ -2,18 +2,32 @@
     {
 	"name": "Little Punch",
 	"damage": 2,
-	"magicDamage": 0
+	"magicDamage": 0,
+	"stamina": 0,
+	"mana": 0
+    },
+
+    {
+	"name": "Fireball",
+	"damage": 0,
+	"magicDamage": 5,
+	"stamina": 0,
+	"mana": 4
     },
 
     {
 	"name": "Super Punch",
 	"damage": 3,
-	"magicDamage": 0
+	"magicDamage": 0,
+	"stamina": 0,
+	"mana": 0
     },
 
     {
 	"name": "Super Laser Beam",
 	"damage": 0,
-	"magicDamage": 5
+	"magicDamage": 5,
+	"stamina": 0,
+	"mana": 4
     }
 ]
