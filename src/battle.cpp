@@ -185,7 +185,24 @@ void Battle::showLevelUpMenu() {
     cin >> choice;
     
     switch (choice) {
-      // TODO: Check what the user chose and increase that stat. Do it with a switch.
+    case 1:
+      player.hp++;
+      break;
+    case 2:
+      player.attack++;
+      break;
+    case 3:
+      player.defense++;
+      break;
+    case 4:
+      player.shieldDefense++;
+      break;
+    case 5:
+      player.mana++;
+      break;
+    case 6:
+      player.stamina++;
+      break;
     }
   }
 }
