@@ -106,14 +106,14 @@ void Battle::attack() {
 
       exitLoop = true;
     }
-    
+
     // Decrease the user mana and stamina
     player.mana -= attack.mana;
     player.stamina -= attack.stamina;
-    
+
     // Calculate how much damage is dealt to the enemy
     int damage = (attack.damage + attack.magicDamage + player.attack) - enemy.defense;
-    
+
     bool critical = false;
     // 5 % chance of a critical hit
     int randNum = rand() % 100;
@@ -205,7 +205,7 @@ void Battle::attack() {
       player.goal *= 2;
 
       // To let the user choose what stats to improve
-      showLevelUpMenu();
+      showLevelUpMenu(parsePlayer());
     }
   }
 
@@ -216,33 +216,57 @@ void Battle::attack() {
   }
 }
 
-void Battle::showLevelUpMenu() {
+void Battle::showLevelUpMenu(Player originalPlayer) {
   for (int points = player.level; points != 0; points--) {
     cout << "Points: " << points << endl << "1. HP" << endl << "2. Attack" << endl << "3. Defense" << endl << "4. Shield" << endl << "5. Mana" << endl << "6. Stamina" << endl << "Your choice: ";
 
     int choice;
-    
+
     cin >> choice;
-    
+
     switch (choice) {
     case 1:
-      player.hp++;
+      originalPlayer.hp++;
       break;
     case 2:
-      player.attack++;
+      originalPlayer.attack++;
       break;
     case 3:
-      player.defense++;
+      originalPlayer.defense++;
       break;
     case 4:
-      player.shieldDefense++;
+      originalPlayer.shieldDefense++;
       break;
     case 5:
-      player.mana++;
+      originalPlayer.mana++;
       break;
     case 6:
-      player.stamina++;
+      originalPlayer.stamina++;
       break;
     }
   }
+
+  Json::Value jPlayer;
+
+  Json::Reader reader; // The reader... that reads
+
+  ifstream ifs("./json/player.json");
+
+  bool parsingSuccessful = reader.parse(ifs, jPlayer);
+  if (!parsingSuccessful) {
+    // Print error
+    cout << "Failed to parse the player" << endl
+          << reader.getFormattedErrorMessages();
+  }
+
+  jPlayer["hp"] = originalPlayer.hp;
+  jPlayer["attack"] = originalPlayer.attack;
+  jPlayer["defense"] = originalPlayer.defense;
+  jPlayer["shieldDefense"] = originalPlayer.shieldDefense;
+  jPlayer["mana"] = originalPlayer.mana;
+  jPlayer["stamina"] = originalPlayer.stamina;
+
+  Json::StyledWriter writer;
+  ofstream jPlayerFile("./json/player.json");
+  jPlayerFile << writer.write(jPlayer);
 }
