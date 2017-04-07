@@ -2,12 +2,16 @@
 
 using namespace std;
 
-void printMessage(string message, int time, int extraTime, bool newLine) {
+void printMessage(string message, string color, int time, int extraTime, bool newLine) {
+  cout << color;
+
   for (unsigned int i = 0; i < message.length(); i++) {
     cout << message.at(i);
     fflush(stdout);
     usleep(time * 1000);
   }
+
+  cout << WHITE;
 
   if (newLine)
     cout << endl;

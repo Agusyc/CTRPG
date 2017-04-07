@@ -10,9 +10,9 @@ Battle::Battle(Enemy enm, Player ply) {
 void Battle::start(string message) {
   // Start the battle
 
-  printMessage(message);
+  printMessage(message, YELLOW);
 
-  printMessage(enemy.name + string(" wants to fight!"));
+  printMessage(enemy.name + string(" wants to fight!"), RED);
 
   // Seed the random number generator.
   srand(time(NULL));
@@ -39,7 +39,7 @@ void Battle::loop() {
 	break;
       case 4:
 	// TODO: See if player can flee
-	printMessage("Chicken!", QUICK_TEXT);
+	printMessage("Chicken!", WHITE, QUICK_TEXT);
 	break;
       default:
 	printMessage("That is not a valid option...");
@@ -131,9 +131,9 @@ void Battle::attack() {
       stringstream ss;
       if (critical)
 	ss << "With a critical hit, ";
-      ss << "You deal " << damage << " to " << enemy.name << " with " << attack.name  << "!" << endl << "It now has " << enemy.hp - damage << " HP." << endl;
+      ss << "You deal " << RED << damage << WHITE << " to " << enemy.name << " with " << YELLOW << attack.name << WHITE  << "!" << endl << "It now has " << enemy.hp - damage << " HP." << endl;
       
-      printMessage(ss.str(), QUICK_TEXT);
+      printMessage(ss.str(), WHITE, QUICK_TEXT);
       
       enemy.hp -= damage;
     }
@@ -190,7 +190,7 @@ void Battle::attack() {
 	  ss << "With a critical hit, ";
 	ss << enemy.name << " deals you " << damage << " with " << attack.name << "!"  << endl << "You now have " << player.hp - damage << " HP.";
 	
-	printMessage(ss.str(), QUICK_TEXT);
+	printMessage(ss.str(), WHITE, QUICK_TEXT);
 	
 	player.hp -= damage;
       }

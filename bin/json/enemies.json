@@ -13,12 +13,12 @@
 
     {
      	"name": "Demon",
-        "attack": 1,
+        "attack": 2,
         "defense": 2,
         "shieldDefense": 2,
         "stamina": 0,
         "mana": 0,
-        "hp": 1,
+        "hp": 10,
         "xp": 10,
         "attacks": [1, 2]
     }
