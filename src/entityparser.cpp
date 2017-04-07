@@ -2,6 +2,40 @@
 
 using namespace std;
 
+Json::Value getJsonPlayer() {
+  Json::Value jPlayer;
+
+  Json::Reader reader; // The reader... that reads
+
+  ifstream ifs("./json/player.json");
+
+  bool parsingSuccessful = reader.parse(ifs, jPlayer);
+  if (!parsingSuccessful) {
+    // Print error
+    cout << "Failed to parse the player" << endl
+          << reader.getFormattedErrorMessages();
+  }
+
+  return jPlayer;
+}
+
+int getEnemiesNumber() {
+	  Json::Value root;
+
+  Json::Reader reader; // The reader... that reads
+
+  ifstream ifs("./json/enemies.json");
+
+  bool parsingSuccessful = reader.parse(ifs, root);
+  if (!parsingSuccessful) {
+    // Print error
+    cout << "Failed to parse the enemies" << endl
+          << reader.getFormattedErrorMessages();
+  }
+
+  return root.size();
+}
+
 Attack parseAttack(int index) {
   Json::Value root; // The root element
   Json::Reader reader; // The reader... that reads

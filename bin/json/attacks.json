@@ -8,6 +8,14 @@
     },
 
     {
+	"name": "Spear hit",
+	"damage": 2,
+	"magicDamage": 0,
+	"stamina": 0,
+	"mana": 0
+    },
+
+    {
 	"name": "Fireball",
 	"damage": 0,
 	"magicDamage": 5,
@@ -16,18 +24,18 @@
     },
 
     {
-	"name": "Super Punch",
-	"damage": 3,
+	"name": "Spit",
+	"damage": 1,
 	"magicDamage": 0,
 	"stamina": 0,
 	"mana": 0
     },
 
     {
-	"name": "Super Laser Beam",
-	"damage": 0,
-	"magicDamage": 5,
+	"name": "Swallow",
+	"damage": 3,
+	"magicDamage": 0,
 	"stamina": 0,
-	"mana": 4
+	"mana": 0
     }
 ]

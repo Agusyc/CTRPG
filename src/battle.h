@@ -3,6 +3,7 @@
 #include "entityparser.h"
 #include <json/writer.h>
 #include <sstream>
+#include <random>
 
 class Battle {
  private:

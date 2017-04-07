@@ -5,6 +5,10 @@
 #include <json/reader.h>
 #include "entities.h"
 
+Json::Value getJsonPlayer();
+
+int getEnemiesNumber();
+
 Attack parseAttack(int index);
 
 Enemy parseEnemy(int index);

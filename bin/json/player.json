@@ -1,13 +1,13 @@
 {
-   "attack" : 1,
-   "attacks" : [ 0, 1 ],
+   "attack" : 3,
+   "attacks" : [ 0, 2 ],
    "defense" : 1,
-   "goal" : 10,
+   "goal" : 20,
    "hp" : 10,
-   "level" : 1,
+   "level" : 2,
    "mana" : 5,
    "name" : "Agus",
    "shieldDefense" : 1,
    "stamina" : 5,
-   "xp" : 0
+   "xp" : 10
 }

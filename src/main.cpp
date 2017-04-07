@@ -7,14 +7,14 @@ using namespace std;
 // This struct represents the player's character
 Player player;
 
-// Enemy for testing purposes
+// This one represents an enemy
 Enemy enemy;
 
 // Initializes eveything
 void init() {
-	player = parsePlayer();
+	srand(time(NULL));
 
-	enemy = parseEnemy(0);
+	player = parsePlayer();
 }
 
 int main() {
@@ -22,10 +22,12 @@ int main() {
 
 	printMessage("Welcome to CTRPG!");
 
-	// Just for testing the battle system
-	Battle testBattle(enemy, player);
+	while (true) {
+		enemy = parseEnemy(rand() % getEnemiesNumber());
 
-	testBattle.start("This is a test!");
+		Battle testBattle(enemy, player);
 
+		testBattle.start("Are you ready?");
+	}
 	return 0;
 }

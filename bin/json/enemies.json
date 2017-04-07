@@ -1,13 +1,26 @@
 [
     {
-        "name": "Badass Guy",
+        "name": "Slime",
         "attack": 1,
         "defense": 1,
         "shieldDefense": 1,
-        "stamina": 5,
-	"mana": 5,
-        "hp": 10,
+        "stamina": 0,
+	"mana": 0,
+        "hp": 5,
+        "xp": 3,
+        "attacks": [3, 4]
+    },
+
+    {
+     	"name": "Demon",
+        "attack": 1,
+        "defense": 2,
+        "shieldDefense": 2,
+        "stamina": 0,
+        "mana": 0,
+        "hp": 1,
         "xp": 10,
-        "attacks": [2, 3]
+        "attacks": [1, 2]
     }
+
 ]

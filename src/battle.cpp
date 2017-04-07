@@ -14,6 +14,9 @@ void Battle::start(string message) {
 
   printMessage(enemy.name + string(" wants to fight!"));
 
+  // Seed the random number generator.
+  srand(time(NULL));
+
   loop();
 }
 
@@ -90,15 +93,13 @@ void Battle::attack() {
 	continue;
       }
 
-      
-      
       attack = player.attacks.at(choice - 1);
-      
+
       if (player.mana < attack.mana) {
 	printMessage("You don't have enough mana to use that attack!");
 	continue;
       }
-      
+
       if (player.stamina < attack.stamina) {
 	printMessage("You don't have enough stamina to use that attack!");
 	continue;
@@ -113,79 +114,92 @@ void Battle::attack() {
 
     // Calculate how much damage is dealt to the enemy
     int damage = (attack.damage + attack.magicDamage + player.attack) - enemy.defense;
-
-    bool critical = false;
-    // 5 % chance of a critical hit
-    int randNum = rand() % 100;
-    if (randNum < 5) {
-      critical = true;
-      damage *= 2;
-    }
-
-    stringstream ss;
-    if (critical)
+    
+    if (damage <= 0) {
+      // The attack doesn't do anything
+      printMessage("Man... That attack is so lame that it doesn't do anything.");
+    } else {
+      // The attack is powerful enough to do something
+      bool critical = false;
+      // 5 % chance of a critical hit
+      int randNum = rand() % 100;
+      if (randNum < 5) {
+	critical = true;
+	damage *= 2;
+      }
+      
+      stringstream ss;
+      if (critical)
 	ss << "With a critical hit, ";
-    ss << "You deal " << damage << " to " << enemy.name << " with " << attack.name  << "!" << endl << "It now has " << enemy.hp - damage << " HP." << endl;
-
-    printMessage(ss.str(), QUICK_TEXT);
-
-    enemy.hp -= damage;
+      ss << "You deal " << damage << " to " << enemy.name << " with " << attack.name  << "!" << endl << "It now has " << enemy.hp - damage << " HP." << endl;
+      
+      printMessage(ss.str(), QUICK_TEXT);
+      
+      enemy.hp -= damage;
+    }
   } else {
     // The enemy attacks
     stringstream ss;
     ss << enemy.name << " has to attack!";
-
+    
     printMessage(ss.str());
-
-    bool enemyAttacks = rand() & 2;
+    
+    bool enemyAttacks = rand() % 2;
     if (enemyAttacks) {
-	int randNum;
-	Attack attack;
-	bool exitLoop = false;
-
-	// This loop ensures that the enemy doesn't choose an attack that it can't use because of mana or stamina.
-	while (!exitLoop) {
-		randNum = rand()%(enemy.attacks.size()-0 + 1) + 0;
-		attack = enemy.attacks.at(randNum);
-
-		if (enemy.mana >= attack.mana && enemy.stamina >= attack.stamina)
-			exitLoop = true;
-	}
-
-	// Decrease enemy's mana and stamina
-	enemy.mana -= attack.mana;
-	enemy.stamina -= attack.stamina;
-
-	// Calculate how much damage is dealt to the player
-	int damage = (attack.damage + attack.magicDamage + enemy.attack) - player.defense;
-
-	if (defending)
-	  damage -= player.shieldDefense;
-
+      int randNum;
+      Attack attack;
+      bool exitLoop = false;
+      
+      // This loop ensures that the enemy doesn't choose an attack that it can't use because of mana or stamina.
+      while (!exitLoop) {
+	randNum = rand()%(enemy.attacks.size()-0 + 1) + 0;
+	attack = enemy.attacks.at(randNum);
+	
+	if (enemy.mana >= attack.mana && enemy.stamina >= attack.stamina)
+	  exitLoop = true;
+      }
+      
+      // Decrease enemy's mana and stamina
+      enemy.mana -= attack.mana;
+      enemy.stamina -= attack.stamina;
+      
+      // Calculate how much damage is dealt to the player
+      int damage = (attack.damage + attack.magicDamage + enemy.attack) - player.defense;
+      
+      if (defending)
+	damage -= player.shieldDefense;
+      
+      if (damage <= 0) {
+	// The attack doesn't do anything
+	ss << enemy.name << " tries to hurt you with " << attack.name <<  "... But it can't!";
+	printMessage(ss.str());
+      } else {
+	// The attack is powerful enough...
 	bool critical = false;
 	// 5 % chance of a critical hit
-        randNum = rand() % 100;
+	randNum = rand() % 100;
 	if (randNum < 5) {
 	  critical = true;
 	  damage *= 2;
 	}
-
+	
 	ss.str("");
 	ss.clear();
-
+	
 	if (critical)
 	  ss << "With a critical hit, ";
 	ss << enemy.name << " deals you " << damage << " with " << attack.name << "!"  << endl << "You now have " << player.hp - damage << " HP.";
-
+	
 	printMessage(ss.str(), QUICK_TEXT);
-
+	
 	player.hp -= damage;
+      }
     } else {
       // The enemy decides not to attack
       printMessage("But it is resting...");
     }
   }
-
+  
   // When the player wins
   if (enemy.hp <= 0) {
     printMessage("You win!");
@@ -207,6 +221,8 @@ void Battle::attack() {
       // To let the user choose what stats to improve
       showLevelUpMenu(parsePlayer());
     }
+
+    player = parsePlayer();
   }
 
   // When the enemy wins
@@ -246,18 +262,7 @@ void Battle::showLevelUpMenu(Player originalPlayer) {
     }
   }
 
-  Json::Value jPlayer;
-
-  Json::Reader reader; // The reader... that reads
-
-  ifstream ifs("./json/player.json");
-
-  bool parsingSuccessful = reader.parse(ifs, jPlayer);
-  if (!parsingSuccessful) {
-    // Print error
-    cout << "Failed to parse the player" << endl
-          << reader.getFormattedErrorMessages();
-  }
+  Json::Value jPlayer = getJsonPlayer();
 
   jPlayer["hp"] = originalPlayer.hp;
   jPlayer["attack"] = originalPlayer.attack;
@@ -265,6 +270,9 @@ void Battle::showLevelUpMenu(Player originalPlayer) {
   jPlayer["shieldDefense"] = originalPlayer.shieldDefense;
   jPlayer["mana"] = originalPlayer.mana;
   jPlayer["stamina"] = originalPlayer.stamina;
+  jPlayer["goal"] = player.goal;
+  jPlayer["xp"] = player.xp;
+  jPlayer["level"] = player.level;
 
   Json::StyledWriter writer;
   ofstream jPlayerFile("./json/player.json");
