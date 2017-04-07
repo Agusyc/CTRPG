@@ -70,7 +70,7 @@ void Battle::loop() {
 }
 
 int Battle::showMenu() {
-  cout << "1. Attack" << endl << "2. Defend" << endl << "3. Item" << endl << "4. Flee" << endl << "Your choice: ";
+  cout << "1. Attack" << endl << "2. Defend" << endl << "3. Item" << endl << "4. Flee" << endl << "HP: " << GREEN << player.hp << WHITE << " | Mana: " << GREEN << player.mana << WHITE << endl << "Your choice: ";
 
   int choice;
   cin >> choice;
@@ -152,7 +152,7 @@ void Battle::attack() {
   } else {
     // The enemy attacks
     stringstream ss;
-    ss << RED << enemy.name << YELLOW << " has to attack!";
+    ss << RED << enemy.name << WHITE << " has to attack!";
     
     printMessage(ss.str());
     
@@ -199,7 +199,7 @@ void Battle::attack() {
 
 	if (critical)
 	  ss << "With a critical hit, ";
-	ss << enemy.name << " deals you " << damage << " with " << attack.name << "!"  << endl << "You now have " << player.hp - damage << " HP." << endl;
+ss << RED << enemy.name << WHITE << " deals you " << RED << damage << WHITE << " with " << YELLOW << attack.name << WHITE << "!"  << endl << "You now have " << GREEN << player.hp - damage << WHITE << " HP." << endl;
 
 	printMessage(ss.str(), WHITE, QUICK_TEXT);
 
@@ -220,7 +220,7 @@ void Battle::attack() {
     } else if (player.xp + enemy.xp >= player.goal) {
       stringstream ss;
 
-      ss << "You leveled up! You are on level " << player.level + 1 << " now!";
+      ss << "You leveled up! You are on level " << YELLOW << player.level + 1 << WHITE << " now!";
 
       player.xp = player.goal - player.xp;
 

@@ -2,7 +2,7 @@
    "attack" : 1,
    "attacks" : [ 0, 2 ],
    "defense" : 1,
-   "goal" : 0,
+   "goal" : 10,
    "hp" : 10,
    "level" : 1,
    "mana" : 5,
