@@ -9,6 +9,8 @@ Json::Value getJsonPlayer();
 
 int getEnemiesNumber();
 
+int getAttacksNumber(int index);
+
 Attack parseAttack(int index);
 
 Enemy parseEnemy(int index);

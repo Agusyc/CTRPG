@@ -20,20 +20,37 @@ Json::Value getJsonPlayer() {
 }
 
 int getEnemiesNumber() {
-	  Json::Value root;
+	Json::Value enemies;
 
-  Json::Reader reader; // The reader... that reads
+	Json::Reader reader; // The reader... that reads
 
-  ifstream ifs("./json/enemies.json");
+	ifstream ifs("./json/enemies.json");
 
-  bool parsingSuccessful = reader.parse(ifs, root);
-  if (!parsingSuccessful) {
-    // Print error
-    cout << "Failed to parse the enemies" << endl
+	bool parsingSuccessful = reader.parse(ifs, enemies);
+	if (!parsingSuccessful) {
+	// Print error
+	cout << "Failed to parse the enemies" << endl
           << reader.getFormattedErrorMessages();
-  }
+	}
 
-  return root.size();
+  return enemies.size();
+}
+
+int getAttacksNumber(int index) {
+	Json::Value enemies;
+
+	Json::Reader reader; // The reader... that reads.
+
+	ifstream ifs("./json/enemies.json");
+
+	bool parsingSuccessful = reader.parse(ifs, enemies);
+	if(!parsingSuccessful) {
+	// Print error
+		cout << "Failed to parse the enemies" << endl << reader.getFormattedErrorMessages();
+	}
+
+	// Return the size of the array "attacks" of the enemy with index "index".
+	return enemies[index]["attacks"].size();
 }
 
 Attack parseAttack(int index) {
@@ -87,6 +104,9 @@ Enemy parseEnemy(int index) {
   enemy.stamina = jEnemy["stamina"].asInt();
   enemy.hp = jEnemy["hp"].asInt();
   enemy.xp = jEnemy["xp"].asInt();
+  enemy.id = index;
+  enemy.minLevel = jEnemy["minLevel"].asInt();
+  enemy.maxLevel = jEnemy["maxLevel"].asInt();
 
   // Iterates trough the array "attacks", which contains all the indexes of the attacks of the enemy
   for (const Json::Value& attack : jEnemy["attacks"]) {

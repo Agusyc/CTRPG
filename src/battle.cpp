@@ -152,11 +152,12 @@ void Battle::attack() {
       
       // This loop ensures that the enemy doesn't choose an attack that it can't use because of mana or stamina.
       while (!exitLoop) {
-	randNum = rand()%(enemy.attacks.size()-0 + 1) + 0;
+	randNum = rand() % getAttacksNumber(enemy.id);
 	attack = enemy.attacks.at(randNum);
 	
-	if (enemy.mana >= attack.mana && enemy.stamina >= attack.stamina)
+	if (enemy.mana >= attack.mana && enemy.stamina >= attack.stamina) {
 	  exitLoop = true;
+	}
       }
       
       // Decrease enemy's mana and stamina
@@ -165,10 +166,10 @@ void Battle::attack() {
       
       // Calculate how much damage is dealt to the player
       int damage = (attack.damage + attack.magicDamage + enemy.attack) - player.defense;
-      
+
       if (defending)
 	damage -= player.shieldDefense;
-      
+
       if (damage <= 0) {
 	// The attack doesn't do anything
 	ss << enemy.name << " tries to hurt you with " << attack.name <<  "... But it can't!";
@@ -182,16 +183,17 @@ void Battle::attack() {
 	  critical = true;
 	  damage *= 2;
 	}
-	
+
+	// Reset the stringstream
 	ss.str("");
 	ss.clear();
-	
+
 	if (critical)
 	  ss << "With a critical hit, ";
-	ss << enemy.name << " deals you " << damage << " with " << attack.name << "!"  << endl << "You now have " << player.hp - damage << " HP.";
-	
+	ss << enemy.name << " deals you " << damage << " with " << attack.name << "!"  << endl << "You now have " << player.hp - damage << " HP." << endl;
+
 	printMessage(ss.str(), WHITE, QUICK_TEXT);
-	
+
 	player.hp -= damage;
       }
     } else {
@@ -199,7 +201,7 @@ void Battle::attack() {
       printMessage("But it is resting...");
     }
   }
-  
+
   // When the player wins
   if (enemy.hp <= 0) {
     printMessage("You win!");
@@ -221,14 +223,13 @@ void Battle::attack() {
       // To let the user choose what stats to improve
       showLevelUpMenu(parsePlayer());
     }
-
-    player = parsePlayer();
   }
 
   // When the enemy wins
   if (player.hp <= 0) {
     printMessage("You lose!");
     over = true;
+    exit(0);
   }
 }
 

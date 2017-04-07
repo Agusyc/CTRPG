@@ -23,7 +23,15 @@ int main() {
 	printMessage("Welcome to CTRPG!");
 
 	while (true) {
-		enemy = parseEnemy(rand() % getEnemiesNumber());
+		player = parsePlayer(); // In case the player leveled up, to update the stats
+
+		while (true) {
+			enemy = parseEnemy(rand() % getEnemiesNumber());
+			// Check if the player's level is right for the enemy. Otherwise, get another one (Run loop again).
+			if (player.level >= enemy.minLevel && player.level <= enemy.maxLevel) {
+				break; // Exit the while loop
+			}
+		}
 
 		Battle testBattle(enemy, player);
 

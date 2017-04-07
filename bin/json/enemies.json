@@ -8,7 +8,9 @@
 	"mana": 0,
         "hp": 5,
         "xp": 3,
-        "attacks": [3, 4]
+        "attacks": [3, 4],
+	"minLevel": 1,
+	"maxLevel": 3
     },
 
     {
@@ -20,7 +22,9 @@
         "mana": 0,
         "hp": 10,
         "xp": 10,
-        "attacks": [1, 2]
+        "attacks": [1, 2],
+	"minLevel": 1,
+	"maxLevel": 5
     }
 
 ]
