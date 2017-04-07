@@ -14,6 +14,7 @@
 #define GREEN   "\033[32m"      /* Green */
 #define YELLOW  "\033[33m"      /* Yellow */
 #define WHITE   "\033[37m"      /* White */
+#define BOLD	"\033[10m"	/* Bold */
 
 // Prints message with a certain speed and waits some time for the next message
 void printMessage(std::string message, std::string color = WHITE, int time = NORMAL_TEXT, int extraTime = 300, bool newLine = true);

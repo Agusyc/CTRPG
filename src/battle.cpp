@@ -31,15 +31,28 @@ void Battle::loop() {
 	break;
       case 2:
 	defending = true;
-	printMessage("You use your shield to, like, defend yourself.");
+	printMessage(string("You use your ") + YELLOW + string("shield ") + WHITE + string("to, like, defend yourself."));
 	break;
       case 3:
 	// TODO: Show items menu
-	printMessage("You wanna use your stuff?");
-	break;
+	printMessage("You wanna use your stuff? You can't... Until I update this game.");
+	continue;
       case 4:
-	// TODO: See if player can flee
-	printMessage("Chicken!", WHITE, QUICK_TEXT);
+	int chance;
+	// If player has more than 50 % of his health
+	if (player.hp >= (parsePlayer().hp / 2)) {
+		chance = 75; // 75% chance of fleeing
+	} else {
+		chance = 32; // 32% chance of fleeing
+	}
+	// See if the player flees or not
+	if (rand() % 100 < chance) {
+		printMessage("You escape... You chicken!");
+		over = true;
+		continue;
+	} else {
+		printMessage("You tried to escape... But you couldn't!");
+	}
 	break;
       default:
 	printMessage("That is not a valid option...");
@@ -96,12 +109,12 @@ void Battle::attack() {
       attack = player.attacks.at(choice - 1);
 
       if (player.mana < attack.mana) {
-	printMessage("You don't have enough mana to use that attack!");
+	printMessage(string("You don't have enough ") + GREEN + string("mana ") + WHITE + string("to use that attack!"));
 	continue;
       }
 
       if (player.stamina < attack.stamina) {
-	printMessage("You don't have enough stamina to use that attack!");
+	printMessage(string("You don't have enough ") + GREEN + string("stamina ") + WHITE + string("to use that attack!"));
 	continue;
       }
 
@@ -122,16 +135,15 @@ void Battle::attack() {
       // The attack is powerful enough to do something
       bool critical = false;
       // 5 % chance of a critical hit
-      int randNum = rand() % 100;
-      if (randNum < 5) {
+      if (rand() % 100 < 5) {
 	critical = true;
 	damage *= 2;
       }
       
       stringstream ss;
       if (critical)
-	ss << "With a critical hit, ";
-      ss << "You deal " << RED << damage << WHITE << " to " << enemy.name << " with " << YELLOW << attack.name << WHITE  << "!" << endl << "It now has " << enemy.hp - damage << " HP." << endl;
+	ss << "With a " << BOLD << "critical hit, ";
+      ss << "You deal " << RED << damage << WHITE << " to " << YELLOW << enemy.name << WHITE << " with " << YELLOW << attack.name << WHITE  << "!" << endl << "It now has " << GREEN << enemy.hp - damage << WHITE << " HP." << endl;
       
       printMessage(ss.str(), WHITE, QUICK_TEXT);
       
@@ -140,20 +152,18 @@ void Battle::attack() {
   } else {
     // The enemy attacks
     stringstream ss;
-    ss << enemy.name << " has to attack!";
+    ss << RED << enemy.name << YELLOW << " has to attack!";
     
     printMessage(ss.str());
     
     bool enemyAttacks = rand() % 2;
     if (enemyAttacks) {
-      int randNum;
       Attack attack;
       bool exitLoop = false;
       
       // This loop ensures that the enemy doesn't choose an attack that it can't use because of mana or stamina.
       while (!exitLoop) {
-	randNum = rand() % getAttacksNumber(enemy.id);
-	attack = enemy.attacks.at(randNum);
+	attack = enemy.attacks.at(rand() % getAttacksNumber(enemy.id));
 	
 	if (enemy.mana >= attack.mana && enemy.stamina >= attack.stamina) {
 	  exitLoop = true;
@@ -178,8 +188,7 @@ void Battle::attack() {
 	// The attack is powerful enough...
 	bool critical = false;
 	// 5 % chance of a critical hit
-	randNum = rand() % 100;
-	if (randNum < 5) {
+	if (rand() % 100 < 5) {
 	  critical = true;
 	  damage *= 2;
 	}
