@@ -3,6 +3,13 @@
 #include <string>
 #include <vector>
 
+// This struct represents an item
+struct Item {
+  std::string name;
+  int attackBoost, defenseBoost, manaRecover, staminaRecover, hpRecover, minLevel, maxLevel;
+};
+
+
 // This struct represents an attack
 struct Attack {
   std::string name;
@@ -21,10 +28,5 @@ struct Player {
   std::string name;
   int attack, defense, shieldDefense, mana, stamina, hp, level, xp, goal;
   std::vector<Attack> attacks;
-};
-
-// This struct represents an item
-struct Item {
-  std::string name;
-  int attackBoost, defenseBoos, manaRecover, hpRecover, minLevel, maxLevel;
+  std::vector<Item> items;
 };

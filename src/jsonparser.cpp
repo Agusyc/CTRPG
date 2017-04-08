@@ -53,6 +53,34 @@ int getAttacksNumber(int index) {
 	return enemies[index]["attacks"].size();
 }
 
+Item parseItem(int index) {
+  Json::Value root; // The root element
+  Json::Reader reader; // The reader... that reads
+
+  ifstream ifs("./json/items.json");
+
+  bool parsingSuccessful = reader.parse(ifs, root);
+  if(!parsingSuccessful) {
+	// Print error
+	cout << "Failed to parse the attacks" << endl << reader.getFormattedErrorMessages();
+  }
+
+  Json::Value jItem = root[index];
+
+  Item item;
+
+  item.name = jItem["name"].asString();
+  item.attackBoost = jItem["attackBoost"].asInt();
+  item.defenseBoost = jItem["attackBoost"].asInt();
+  item.manaRecover = jItem["manaRecover"].asInt();
+  item.staminaRecover = jItem["staminaRecover"].asInt();
+  item.hpRecover = jItem["manaRecover"].asInt();
+  item.minLevel = jItem["minLevel"].asInt();
+  item.maxLevel = jItem["maxLevel"].asInt();
+
+  return item;
+}
+
 Attack parseAttack(int index) {
   Json::Value root; // The root element
   Json::Reader reader; // The reader... that reads
@@ -145,6 +173,11 @@ Player parsePlayer() {
   // Iterates trough the array "attacks", which contains all the indexes of the attacks of the player
   for (const Json::Value& attack : jPlayer["attacks"]) { // "attack" is the current index
     player.attacks.push_back(parseAttack(attack.asInt())); // Pushes the attack to the vector
+  }
+
+  // Itereates trough the array "items", which contains all the indexes of the items of the player
+  for (const Json::Value& item : jPlayer["items"]) { // "item" is the current index
+	  player.items.push_back(parseItem(item.asInt())); // Pushes the item to the vector
   }
 
   return player;

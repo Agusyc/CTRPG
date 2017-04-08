@@ -1,6 +1,6 @@
 {
    "attack" : 1,
-   "attacks" : [ 0, 2 ],
+   "attacks" : [ 1, 2 ],
    "defense" : 1,
    "goal" : 10,
    "hp" : 10,

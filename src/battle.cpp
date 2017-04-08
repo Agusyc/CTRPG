@@ -279,7 +279,6 @@ void Battle::showLevelUpMenu(Player originalPlayer) {
   jPlayer["hp"] = originalPlayer.hp;
   jPlayer["attack"] = originalPlayer.attack;
   jPlayer["defense"] = originalPlayer.defense;
-  jPlayer["shieldDefense"] = originalPlayer.shieldDefense;
   jPlayer["mana"] = originalPlayer.mana;
   jPlayer["stamina"] = originalPlayer.stamina;
   jPlayer["goal"] = player.goal;
