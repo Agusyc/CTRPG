@@ -36,9 +36,8 @@ void Battle::loop() {
 	printMessage(string("You use your ") + YELLOW + string("shield ") + WHITE + string("to, like, defend yourself."));
 	break;
       case 3:
-	// TODO: Show items menu
-	printMessage("You wanna use your stuff? You can't... Until I update this game.");
-	continue;
+	useItem();
+	break;
       case 4:
 	int chance;
 	// If player has more than 50 % of his health
@@ -51,6 +50,7 @@ void Battle::loop() {
 	if (rand() % 100 < chance) {
 		printMessage("You escape... You chicken!");
 		over = true;
+		writeItems();
 		continue;
 	} else {
 		printMessage("You tried to escape... But you couldn't!");
@@ -102,7 +102,7 @@ void Battle::attack() {
 
       cout << endl;
 
-      if (choice > player.attacks.size() || choice < 0) {
+      if (choice > player.attacks.size() || choice < 1) {
 	printMessage("That's not a valid choice...");
 	cout << endl;
 	continue;
@@ -165,7 +165,7 @@ void Battle::attack() {
       
       // This loop ensures that the enemy doesn't choose an attack that it can't use because of mana or stamina.
       while (!exitLoop) {
-	attack = enemy.attacks.at(rand() % getAttacksNumber(enemy.id));
+	attack = enemy.attacks.at(rand() % enemy.attacks.size());
 	
 	if (enemy.mana >= attack.mana && enemy.stamina >= attack.stamina) {
 	  exitLoop = true;
@@ -234,6 +234,7 @@ ss << RED << enemy.name << WHITE << " deals you " << GREEN << damage << WHITE <<
       // To let the user choose what stats to improve
       showLevelUpMenu(parsePlayer());
     }
+    writeItems();
   }
 
   // When the enemy wins
@@ -242,6 +243,62 @@ ss << RED << enemy.name << WHITE << " deals you " << GREEN << damage << WHITE <<
     over = true;
     exit(0);
   }
+}
+
+void Battle::useItem() {
+	unsigned int choice;
+	bool exitLoop = false;
+	while (!exitLoop) {
+		for (unsigned int i = 0; i < player.items.size(); i++) {
+			cout << i + 1 << ". " << player.items.at(i).name << endl;
+		} 
+		cout << "Your choice: ";
+
+ 	 	cin >> choice;
+
+		if (choice > player.items.size() || choice < 1) {
+        		printMessage("That's not a valid choice...");
+	        	cout << endl;
+        		continue;
+		}
+
+		exitLoop = true;
+	}
+
+ 	Item item = player.items.at(choice - 1);
+
+  	stringstream ss;
+
+  	ss << "The item " << YELLOW << item.name << WHITE << ":" << endl; 
+
+  	if (item.attackBoost != 0) {
+		ss << "Boosts your attack by " << GREEN << item.attackBoost << WHITE << endl;
+		player.attack += item.attackBoost;
+  	}
+
+  	if (item.defenseBoost != 0) {
+		ss << "Boosts your defense by " << GREEN << item.defenseBoost << WHITE << endl;
+		player.defense += item.defenseBoost;
+  	}
+
+  	if (item.manaRecover != 0) {
+		ss << "Gives you " << GREEN << item.manaRecover << WHITE << " mana." << endl;
+		player.mana += item.manaRecover;
+  	}
+
+  	if (item.staminaRecover != 0) {
+		ss << "Gives you " << GREEN << item.staminaRecover << WHITE << " stamina." << endl;	
+ 		player.stamina += item.staminaRecover;
+  	}
+
+  	if (item.hpRecover != 0) {
+		ss << "Gives you " << GREEN << item.hpRecover << WHITE << " HP." << endl;
+ 		player.hp += item.hpRecover;
+  	}
+
+  	cout << ss.str() << endl;
+
+	player.items.erase(player.items.begin() + item.id); // Delete item with index "item.id"
 }
 
 void Battle::showLevelUpMenu(Player originalPlayer) {
@@ -288,4 +345,20 @@ void Battle::showLevelUpMenu(Player originalPlayer) {
   Json::StyledWriter writer;
   ofstream jPlayerFile("./json/player.json");
   jPlayerFile << writer.write(jPlayer);
+}
+
+void Battle::writeItems() {
+	Json::Value newArray;
+	Json::Value jPlayer = getJsonPlayer();
+
+	for(vector<Item>::iterator it = player.items.begin(); it != player.items.end(); ++it) {
+		Item item = *it;
+		newArray.append(item.id);
+	}
+
+	jPlayer["items"] = newArray;
+
+	Json::StyledWriter writer;
+	ofstream jPlayerFile("./json/player.json");
+	jPlayerFile << writer.write(jPlayer);
 }

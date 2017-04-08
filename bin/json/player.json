@@ -4,6 +4,7 @@
    "defense" : 1,
    "goal" : 10,
    "hp" : 10,
+   "items" : [ 0, 1 ],
    "level" : 1,
    "mana" : 5,
    "name" : "Agus",

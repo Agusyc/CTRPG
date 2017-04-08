@@ -36,23 +36,6 @@ int getEnemiesNumber() {
   return enemies.size();
 }
 
-int getAttacksNumber(int index) {
-	Json::Value enemies;
-
-	Json::Reader reader; // The reader... that reads.
-
-	ifstream ifs("./json/enemies.json");
-
-	bool parsingSuccessful = reader.parse(ifs, enemies);
-	if(!parsingSuccessful) {
-	// Print error
-		cout << "Failed to parse the enemies" << endl << reader.getFormattedErrorMessages();
-	}
-
-	// Return the size of the array "attacks" of the enemy with index "index".
-	return enemies[index]["attacks"].size();
-}
-
 Item parseItem(int index) {
   Json::Value root; // The root element
   Json::Reader reader; // The reader... that reads
@@ -71,12 +54,13 @@ Item parseItem(int index) {
 
   item.name = jItem["name"].asString();
   item.attackBoost = jItem["attackBoost"].asInt();
-  item.defenseBoost = jItem["attackBoost"].asInt();
+  item.defenseBoost = jItem["defenseBoost"].asInt();
   item.manaRecover = jItem["manaRecover"].asInt();
   item.staminaRecover = jItem["staminaRecover"].asInt();
-  item.hpRecover = jItem["manaRecover"].asInt();
+  item.hpRecover = jItem["hpRecover"].asInt();
   item.minLevel = jItem["minLevel"].asInt();
   item.maxLevel = jItem["maxLevel"].asInt();
+  item.id = index;
 
   return item;
 }

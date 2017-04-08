@@ -12,7 +12,9 @@ class Battle {
   void loop();
   void attack();
   int showMenu();
+  void useItem();
   void showLevelUpMenu(Player player);
+  void writeItems();
   bool over = false;
   bool playerTurn = true;
   bool defending = false;

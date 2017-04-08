@@ -6,7 +6,7 @@
 // This struct represents an item
 struct Item {
   std::string name;
-  int attackBoost, defenseBoost, manaRecover, staminaRecover, hpRecover, minLevel, maxLevel;
+  int attackBoost, defenseBoost, manaRecover, staminaRecover, hpRecover, minLevel, maxLevel, id;
 };
 
 

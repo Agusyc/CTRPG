@@ -1,12 +1,23 @@
 [
     {
         "name": "Health potion",
+	"attackBoost": 0,
+	"defenseBoost": 0,
+	"manaRecover": 0,
+	"staminaRecover": 0,
+	"hpRecover": 5,
 	"minLevel": 1,
 	"maxLevel": 3
     },
 
     {
      	"name": "Mana potion",
+	"attackBoost": 0,
+	"defenseBoost": 0,
+	"hpRecover": 0,
+	"manaRecover": 5,
+	"staminaRecover": 0,
+	"hpRecover": 0,
 	"minLevel": 1,
 	"maxLevel": 3
     }
