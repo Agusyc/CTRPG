@@ -100,7 +100,7 @@ int Battle::attack() {
 	cout << i+1 << ". " << player.attacks.at(i).name << endl;
       }
 
-      cout << player.attacks.size() << ". Go back" << endl;
+      cout << player.attacks.size() + 1 << ". Go back" << endl;
 
       cout << "Your choice: ";
 
@@ -108,7 +108,7 @@ int Battle::attack() {
 
       cout << endl;
 
-      if (choice == player.attacks.size()) {
+      if (choice == player.attacks.size() + 1) {
 	return 1;
       }
 
@@ -281,13 +281,15 @@ int Battle::useItem() {
 			cout << i + 1 << ". " << player.items.at(i).name << endl;
 		}
 		
-		cout << player.items.size() << ". Go back" << endl;
+		cout << player.items.size() + 1 << ". Go back" << endl;
 
 		cout << "Your choice: ";
 
  	 	cin >> choice;
 
-		if (choice == player.items.size()) {
+		cout << endl;
+
+		if (choice == player.items.size() + 1) {
 			return 1;
 		}
 
