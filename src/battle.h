@@ -10,9 +10,9 @@ class Battle {
   Player player;
   Enemy enemy;
   void loop();
-  void attack();
+  int attack();
   int showMenu();
-  void useItem();
+  int useItem();
   void showLevelUpMenu(Player player);
   void writeItems();
   bool over = false;

@@ -29,14 +29,18 @@ void Battle::loop() {
       // Checks the user response from the menu
       switch(showMenu()) {
       case 1:
-	attack();
+	if (attack() == 1) {
+		continue;
+	}
 	break;
       case 2:
 	defending = true;
 	printMessage(string("You use your ") + YELLOW + string("shield ") + WHITE + string("to, like, defend yourself."));
 	break;
       case 3:
-	useItem();
+	if (useItem() == 1) {
+		continue;
+	}
 	break;
       case 4:
 	int chance;
@@ -82,7 +86,7 @@ int Battle::showMenu() {
   return choice;
 }
 
-void Battle::attack() {
+int Battle::attack() {
   unsigned int choice;
   if (playerTurn) {
     // The player attacks.
@@ -96,11 +100,17 @@ void Battle::attack() {
 	cout << i+1 << ". " << player.attacks.at(i).name << endl;
       }
 
+      cout << player.attacks.size() << ". Go back" << endl;
+
       cout << "Your choice: ";
 
       cin >> choice;
 
       cout << endl;
+
+      if (choice == player.attacks.size()) {
+	return 1;
+      }
 
       if (choice > player.attacks.size() || choice < 1) {
 	printMessage("That's not a valid choice...");
@@ -260,18 +270,26 @@ ss << RED << enemy.name << WHITE << " deals you " << GREEN << damage << WHITE <<
     over = true;
     exit(0);
   }
+  return 0;
 }
 
-void Battle::useItem() {
+int Battle::useItem() {
 	unsigned int choice;
 	bool exitLoop = false;
 	while (!exitLoop) {
 		for (unsigned int i = 0; i < player.items.size(); i++) {
 			cout << i + 1 << ". " << player.items.at(i).name << endl;
-		} 
+		}
+		
+		cout << player.items.size() << ". Go back" << endl;
+
 		cout << "Your choice: ";
 
  	 	cin >> choice;
+
+		if (choice == player.items.size()) {
+			return 1;
+		}
 
 		if (choice > player.items.size() || choice < 1) {
         		printMessage("That's not a valid choice...");
@@ -316,6 +334,8 @@ void Battle::useItem() {
   	cout << ss.str() << endl;
 
 	player.items.erase(player.items.begin() + item.id); // Delete item with index "item.id"
+
+	return 0;
 }
 
 void Battle::showLevelUpMenu(Player originalPlayer) {
