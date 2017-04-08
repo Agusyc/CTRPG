@@ -11,9 +11,9 @@ Json::Value getJsonPlayer() {
 
   bool parsingSuccessful = reader.parse(ifs, jPlayer);
   if (!parsingSuccessful) {
-    // Print error
-    cout << "Failed to parse the player" << endl
-          << reader.getFormattedErrorMessages();
+	// Print error
+	cout << "Failed to parse the player" << endl << reader.getFormattedErrorMessages();
+  	exit(1);
   }
 
   return jPlayer;
@@ -29,7 +29,8 @@ int getItemsNumber() {
 	bool parsingSuccessful = reader.parse(ifs, items);
 	if (!parsingSuccessful) {
 		// Print error
-		cout << "Failed to parse the enemies" << endl << reader.getFormattedErrorMessages();
+		cout << "Failed to parse the enemies." << endl << "Error:" << endl << reader.getFormattedErrorMessages();
+		exit(1);
 	}
 
 	return items.size();
@@ -44,9 +45,8 @@ int getEnemiesNumber() {
 
 	bool parsingSuccessful = reader.parse(ifs, enemies);
 	if (!parsingSuccessful) {
-	// Print error
-	cout << "Failed to parse the enemies" << endl
-          << reader.getFormattedErrorMessages();
+		// Print error
+		cout << "Failed to parse the enemies." << endl << "Error:" << endl << reader.getFormattedErrorMessages();
 	}
 
   return enemies.size();
@@ -61,7 +61,8 @@ Item parseItem(int index) {
   bool parsingSuccessful = reader.parse(ifs, root);
   if(!parsingSuccessful) {
 	// Print error
-	cout << "Failed to parse the attacks" << endl << reader.getFormattedErrorMessages();
+	cout << "Failed to parse the attacks." << endl << "Error:" << endl << reader.getFormattedErrorMessages();
+  	exit(1);
   }
 
   Json::Value jItem = root[index];
@@ -89,9 +90,9 @@ Attack parseAttack(int index) {
 
   bool parsingSuccessful = reader.parse(ifs, root);
   if (!parsingSuccessful) {
-    // Print error
-    cout << "Failed to parse the attacks" << endl
-	  << reader.getFormattedErrorMessages();
+	// Print error
+	cout << "Failed to parse the attacks." << endl << "Error:" << endl << reader.getFormattedErrorMessages();
+  	exit(1);
   }
 
   Json::Value jAttack = root[index];
@@ -115,9 +116,9 @@ Enemy parseEnemy(int index) {
 
   bool parsingSuccessful = reader.parse(ifs, root);
   if (!parsingSuccessful) {
-    // Print error
-    cout << "Failed to parse the enemies" << endl
-          << reader.getFormattedErrorMessages();
+	// Print error
+	cout << "Failed to parse the enemies." << endl << "Error:" << endl << reader.getFormattedErrorMessages();
+  	exit(1);
   }
 
   Json::Value jEnemy = root[index];
@@ -152,9 +153,9 @@ Player parsePlayer() {
 
   bool parsingSuccessful = reader.parse(ifs, jPlayer);
   if (!parsingSuccessful) {
-    // Print error
-    cout << "Failed to parse the player" << endl
-          << reader.getFormattedErrorMessages();
+	// Print error
+	cout << "Failed to parse the player," << endl << "Error:" << endl << reader.getFormattedErrorMessages();
+  	exit(1);
   }
 
   Player player;
