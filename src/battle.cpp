@@ -234,6 +234,23 @@ ss << RED << enemy.name << WHITE << " deals you " << GREEN << damage << WHITE <<
       // To let the user choose what stats to improve
       showLevelUpMenu(parsePlayer());
     }
+    // Give the player a random Item:
+    Item item;
+
+    bool exitLoop = false;
+    while (!exitLoop) {
+	item = parseItem(rand() % getItemsNumber());
+	if (player.level < item.minLevel || player.level > item.maxLevel) {
+		continue;
+	}
+
+	exitLoop = true;
+    }
+
+    player.items.push_back(item);
+
+    printMessage(string("You found ") + YELLOW + item.name + WHITE + string("!"));
+
     writeItems();
   }
 

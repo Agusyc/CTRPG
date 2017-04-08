@@ -19,6 +19,22 @@ Json::Value getJsonPlayer() {
   return jPlayer;
 }
 
+int getItemsNumber() {
+	Json::Value items;
+
+	Json::Reader reader; // The reader... that reads
+
+	ifstream ifs("./json/enemies.json");
+
+	bool parsingSuccessful = reader.parse(ifs, items);
+	if (!parsingSuccessful) {
+		// Print error
+		cout << "Failed to parse the enemies" << endl << reader.getFormattedErrorMessages();
+	}
+
+	return items.size();
+}
+
 int getEnemiesNumber() {
 	Json::Value enemies;
 
