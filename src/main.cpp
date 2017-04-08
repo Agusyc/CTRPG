@@ -1,6 +1,6 @@
 #include "battle.h"
-#include "entities.h"
-#include "entityparser.h"
+#include "objects.h"
+#include "jsonparser.h"
 
 using namespace std;
 
@@ -23,19 +23,18 @@ int main() {
 	printMessage("Welcome to CTRPG!");
 
 	while (true) {
-		player = parsePlayer(); // In case the player leveled up, to update the stats
-
-		while (true) {
+		bool goodEnemy = false;
+		while (!goodEnemy) {
 			enemy = parseEnemy(rand() % getEnemiesNumber());
 			// Check if the player's level is right for the enemy. Otherwise, get another one (Run loop again).
 			if (player.level >= enemy.minLevel && player.level <= enemy.maxLevel) {
-				break; // Exit the while loop
+				goodEnemy = true; // Exit the while loop
 			}
 		}
 
 		Battle testBattle(enemy, player);
 
-		testBattle.start("Are you ready?");
+		player =testBattle.start("Are you ready?");
 	}
 	return 0;
 }

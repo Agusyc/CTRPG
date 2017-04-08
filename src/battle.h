@@ -1,6 +1,6 @@
 #include "utils.h"
-#include "entities.h"
-#include "entityparser.h"
+#include "objects.h"
+#include "jsonparser.h"
 #include <json/writer.h>
 #include <sstream>
 #include <random>
@@ -18,5 +18,5 @@ class Battle {
   bool defending = false;
  public:
   Battle(Enemy enm, Player ply);
-  void start(std::string message);
+  Player start(std::string message);
 };

@@ -7,17 +7,19 @@ Battle::Battle(Enemy enm, Player ply) {
   player = ply;
 }
 
-void Battle::start(string message) {
+Player Battle::start(string message) {
   // Start the battle
 
   printMessage(message, YELLOW);
 
-  printMessage(enemy.name + string(" wants to fight!"), RED);
+  printMessage(RED + enemy.name + WHITE + string(" wants to fight!"));
 
   // Seed the random number generator.
   srand(time(NULL));
 
   loop();
+
+  return player;
 }
 
 void Battle::loop() {
@@ -109,12 +111,12 @@ void Battle::attack() {
       attack = player.attacks.at(choice - 1);
 
       if (player.mana < attack.mana) {
-	printMessage(string("You don't have enough ") + GREEN + string("mana ") + WHITE + string("to use that attack!"));
+	printMessage(string("You don't have enough ") + YELLOW + string("mana ") + WHITE + string("to use that attack!"));
 	continue;
       }
 
       if (player.stamina < attack.stamina) {
-	printMessage(string("You don't have enough ") + GREEN + string("stamina ") + WHITE + string("to use that attack!"));
+	printMessage(string("You don't have enough ") + YELLOW + string("stamina ") + WHITE + string("to use that attack!"));
 	continue;
       }
 
@@ -143,9 +145,9 @@ void Battle::attack() {
       stringstream ss;
       if (critical)
 	ss << "With a " << BOLD << "critical hit, ";
-      ss << "You deal " << RED << damage << WHITE << " to " << YELLOW << enemy.name << WHITE << " with " << YELLOW << attack.name << WHITE  << "!" << endl << "It now has " << GREEN << enemy.hp - damage << WHITE << " HP." << endl;
+      ss << "You deal " << GREEN << damage << WHITE << " to " << RED << enemy.name << WHITE << " with " << YELLOW << attack.name << WHITE  << "!" << endl << "It now has " << GREEN << enemy.hp - damage << WHITE << " HP." << endl;
       
-      printMessage(ss.str(), WHITE, QUICK_TEXT);
+      printMessage(ss.str());
       
       enemy.hp -= damage;
     }
@@ -182,7 +184,7 @@ void Battle::attack() {
 
       if (damage <= 0) {
 	// The attack doesn't do anything
-	ss << enemy.name << " tries to hurt you with " << attack.name <<  "... But it can't!";
+	ss << RED << enemy.name << WHITE << " tries to hurt you with " << YELLOW << attack.name << WHITE <<  "... But it can't!";
 	printMessage(ss.str());
       } else {
 	// The attack is powerful enough...
@@ -199,15 +201,15 @@ void Battle::attack() {
 
 	if (critical)
 	  ss << "With a critical hit, ";
-ss << RED << enemy.name << WHITE << " deals you " << RED << damage << WHITE << " with " << YELLOW << attack.name << WHITE << "!"  << endl << "You now have " << GREEN << player.hp - damage << WHITE << " HP." << endl;
+ss << RED << enemy.name << WHITE << " deals you " << GREEN << damage << WHITE << " with " << YELLOW << attack.name << WHITE << "!"  << endl << "You now have " << GREEN << player.hp - damage << WHITE << " HP." << endl;
 
-	printMessage(ss.str(), WHITE, QUICK_TEXT);
+	printMessage(ss.str());
 
 	player.hp -= damage;
       }
     } else {
       // The enemy decides not to attack
-      printMessage("But it is resting...");
+      printMessage("But it is resting...\n");
     }
   }
 

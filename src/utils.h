@@ -6,9 +6,9 @@
 #include <limits>
 
 // Predefined text speeds
-#define SLOW_TEXT 200
-#define NORMAL_TEXT 65
-#define QUICK_TEXT 35
+#define SLOW_TEXT 65
+#define NORMAL_TEXT 35
+#define QUICK_TEXT 20
 
 #define RED     "\033[31m"      /* Red */
 #define GREEN   "\033[32m"      /* Green */

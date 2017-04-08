@@ -3,7 +3,7 @@
 #include <fstream>
 #include <json/value.h>
 #include <json/reader.h>
-#include "entities.h"
+#include "objects.h"
 
 Json::Value getJsonPlayer();
 

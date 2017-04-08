@@ -23,4 +23,8 @@ struct Player {
   std::vector<Attack> attacks;
 };
 
-// TODO: Make an Item struct
+// This struct represents an item
+struct Item {
+  std::string name;
+  int attackBoost, defenseBoos, manaRecover, hpRecover, minLevel, maxLevel;
+};

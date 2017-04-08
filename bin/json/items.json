@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Health potion",
+	"minLevel": 1,
+	"maxLevel": 3
+    },
+
+    {
+     	"name": "Mana potion",
+	"minLevel": 1,
+	"maxLevel": 3
+    }
+
+]
