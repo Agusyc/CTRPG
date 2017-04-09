@@ -341,9 +341,9 @@ int Battle::useItem() {
 }
 
 void Battle::showLevelUpMenu(Player originalPlayer) {
-	Json::Value jPlayer = getJsonPlayer();
-    
-	for (int points = player.level; points != 0; points--) {
+    Json::Value jPlayer = getJsonPlayer();
+
+    for (int points = player.level; points != 0; points--) {
         cout << "Points: " << points << endl << "1. HP" << endl << "2. Attack" << endl << "3. Defense" << endl << "4. Shield" << endl << "5. Mana" << endl << "6. Stamina" << endl << "7. New attack" << endl << "Your choice: ";
 
         int choice;
@@ -370,45 +370,47 @@ void Battle::showLevelUpMenu(Player originalPlayer) {
             originalPlayer.stamina++;
             break;
         case 7:
-	    bool exitLoop = false;
-	    while (!exitLoop) {
-            int index = 1;
-	    vector<int> rIndexes;
-            for (int i = 0; i < getAttacksNumber(); i++) {
-                Attack attack = parseAttack(i);
-                if (player.level >= attack.minLevel && player.level <= attack.maxLevel) {
-		    cout << index << ". " << attack.name << " Cost: " << attack.cost << endl;
-                    rIndexes.push_back(i);
-                    index++;
+	    cout << endl; // Just some formatting
+
+            bool exitLoop = false;
+            while (!exitLoop) {
+                int index = 1;
+                vector<int> rIndexes;
+                for (int i = 0; i < getAttacksNumber(); i++) {
+                    Attack attack = parseAttack(i);
+                    if (player.level >= attack.minLevel && player.level <= attack.maxLevel) {
+                        cout << index << ". " << attack.name << " Cost: " << attack.cost << endl;
+                        rIndexes.push_back(i);
+                        index++;
+                    }
                 }
+
+                cout << index << ". Go back" << endl << "Your choice: " << endl;
+
+                int choice;
+                cin >> choice;
+
+                if (choice == index) {
+                    exitLoop = true;
+                    points++;
+                    continue;
+                }
+
+                Attack chosenAttack = parseAttack(rIndexes[choice]);
+
+                if (points < chosenAttack.cost) {
+                    printMessage("You don't have enough points to get that attack!");
+                    continue;
+                }
+
+                points -= chosenAttack.cost;
+
+                printMessage(string("You got ") + YELLOW + chosenAttack.name + WHITE);
+
+                jPlayer["attacks"].append(choice);
+
+                exitLoop = true;
             }
-
-            cout << index << ". Go back" << endl << "Your choice: " << endl;
-
-	    	int choice;
-		cin >> choice;
-
-		if (choice == index) {
-			exitLoop = true;
-			points++;
-			continue;
-		}
-
-		Attack chosenAttack = parseAttack(rIndexes[choice]);
-
-		if (points < chosenAttack.cost) {
-			printMessage("You don't have enough points to get that attack!");
-			continue;
-		}
-
-		points -= chosenAttack.cost;
-
-		printMessage(string("You got ") + YELLOW + chosenAttack.name + WHITE);
-
-		jPlayer["attacks"].append(choice);
-
-		exitLoop = true;
-	    }
 
             break;
         }

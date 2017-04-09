@@ -20,20 +20,20 @@ Json::Value getJsonPlayer() {
 }
 
 int getAttacksNumber() {
-	Json::Value attacks;
+    Json::Value attacks;
 
-	Json::Reader reader; //The reader... that reads
+    Json::Reader reader; //The reader... that reads
 
-	ifstream ifs("./json/attacks.json");
+    ifstream ifs("./json/attacks.json");
 
-	bool parsingSuccessful = reader.parse(ifs, attacks);
-	if (!parsingSuccessful) {
-		// Print error
-		cout << "Failed to parse the enmies." << endl << "Error:" << endl << reader.getFormattedErrorMessages();
-		exit(1);
-	}
+    bool parsingSuccessful = reader.parse(ifs, attacks);
+    if (!parsingSuccessful) {
+        // Print error
+        cout << "Failed to parse the enmies." << endl << "Error:" << endl << reader.getFormattedErrorMessages();
+        exit(1);
+    }
 
-	return attacks.size();
+    return attacks.size();
 }
 
 int getItemsNumber() {
