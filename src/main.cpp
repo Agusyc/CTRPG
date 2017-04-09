@@ -12,29 +12,27 @@ Enemy enemy;
 
 // Initializes eveything
 void init() {
-	srand(time(NULL));
+    srand(time(NULL));
 
-	player = parsePlayer();
+    player = parsePlayer();
 }
 
 int main() {
-	init();
+    init();
 
-	printMessage("Welcome to CTRPG!");
+    while (true) {
+        bool goodEnemy = false;
+        while (!goodEnemy) {
+            enemy = parseEnemy(rand() % getEnemiesNumber());
+            // Check if the player's level is right for the enemy. Otherwise, get another one (Run loop again).
+            if (player.level >= enemy.minLevel && player.level <= enemy.maxLevel) {
+                goodEnemy = true; // Exit the while loop
+            }
+        }
 
-	while (true) {
-		bool goodEnemy = false;
-		while (!goodEnemy) {
-			enemy = parseEnemy(rand() % getEnemiesNumber());
-			// Check if the player's level is right for the enemy. Otherwise, get another one (Run loop again).
-			if (player.level >= enemy.minLevel && player.level <= enemy.maxLevel) {
-				goodEnemy = true; // Exit the while loop
-			}
-		}
+        Battle testBattle(enemy, player);
 
-		Battle testBattle(enemy, player);
-
-		player =testBattle.start("Are you ready?");
-	}
-	return 0;
+        player =testBattle.start("Are you ready?");
+    }
+    return 0;
 }
