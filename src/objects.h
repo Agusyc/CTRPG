@@ -13,7 +13,7 @@ struct Item {
 // This struct represents an attack
 struct Attack {
     std::string name;
-    int damage, magicDamage, mana, stamina;
+    int damage, magicDamage, mana, stamina, minLevel, maxLevel, cost, id;
 };
 
 // This struct represents an enemy

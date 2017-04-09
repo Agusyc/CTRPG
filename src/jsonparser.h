@@ -8,6 +8,8 @@
 
 Json::Value getJsonPlayer();
 
+int getAttacksNumber();
+
 int getItemsNumber();
 
 int getEnemiesNumber();

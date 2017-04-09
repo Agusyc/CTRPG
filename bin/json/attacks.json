@@ -4,7 +4,10 @@
 	"damage": 2,
 	"magicDamage": 0,
 	"stamina": 0,
-	"mana": 0
+	"mana": 0,
+	"minLevel": 0,
+	"maxLevel": 0,
+	"cost": 0
     },
 
     {
@@ -12,7 +15,10 @@
 	"damage": 2,
 	"magicDamage": 0,
 	"stamina": 0,
-	"mana": 0
+	"mana": 0,
+	"minLevel": 2,
+	"maxLevel": 5,
+	"cost": 3
     },
 
     {
@@ -20,7 +26,10 @@
 	"damage": 0,
 	"magicDamage": 5,
 	"stamina": 0,
-	"mana": 4
+	"mana": 4,
+	"minLevel": 0,
+	"maxLevel": 0,
+	"cost": 0
     },
 
     {
@@ -28,7 +37,10 @@
 	"damage": 1,
 	"magicDamage": 0,
 	"stamina": 0,
-	"mana": 0
+	"mana": 0,
+	"minLevel": 2,
+	"maxLevel": 4,
+	"cost": 2
     },
 
     {
@@ -36,6 +48,9 @@
 	"damage": 3,
 	"magicDamage": 0,
 	"stamina": 0,
-	"mana": 0
+	"mana": 0,
+	"minLevel": 2,
+	"maxLevel": 4,
+	"cost": 3
     }
 ]

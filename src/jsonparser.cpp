@@ -19,6 +19,23 @@ Json::Value getJsonPlayer() {
     return jPlayer;
 }
 
+int getAttacksNumber() {
+	Json::Value attacks;
+
+	Json::Reader reader; //The reader... that reads
+
+	ifstream ifs("./json/attacks.json");
+
+	bool parsingSuccessful = reader.parse(ifs, attacks);
+	if (!parsingSuccessful) {
+		// Print error
+		cout << "Failed to parse the enmies." << endl << "Error:" << endl << reader.getFormattedErrorMessages();
+		exit(1);
+	}
+
+	return attacks.size();
+}
+
 int getItemsNumber() {
     Json::Value items;
 
@@ -104,6 +121,10 @@ Attack parseAttack(int index) {
     attack.magicDamage = jAttack["magicDamage"].asInt();
     attack.mana = jAttack["mana"].asInt();
     attack.stamina = jAttack["stamina"].asInt();
+    attack.minLevel = jAttack["minLevel"].asInt();
+    attack.maxLevel = jAttack["maxLevel"].asInt();
+    attack.cost = jAttack["cost"].asInt();
+    attack.id = index;
 
     return attack;
 }
@@ -166,7 +187,7 @@ Player parsePlayer() {
 
     } else {
         // The player doesn't exist.
-        printMessage("Welcome to CTRPG! Please enter your name: ");
+        cout << "Welcome to CTRPG! Please enter your name: ";
         string name;
 
         cin >> name;
