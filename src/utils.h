@@ -1,6 +1,5 @@
 #pragma once
 
-#include <ncurses.h>
 #include <iostream>
 #include <unistd.h>
 #include <limits>

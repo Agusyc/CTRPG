@@ -2,6 +2,7 @@
 #include "objects.h"
 #include "jsonparser.h"
 #include <sstream>
+#include <algorithm>
 #include <random>
 
 class Battle {

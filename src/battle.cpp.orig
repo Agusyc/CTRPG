@@ -370,7 +370,7 @@ void Battle::showLevelUpMenu(Player originalPlayer) {
             originalPlayer.stamina++;
             break;
         case 7:
-            cout << endl; // Just some formatting
+	    cout << endl; // Just some formatting
 
             bool exitLoop = false;
             while (!exitLoop) {
@@ -378,13 +378,10 @@ void Battle::showLevelUpMenu(Player originalPlayer) {
                 vector<int> rIndexes;
                 for (int i = 0; i < getAttacksNumber(); i++) {
                     Attack attack = parseAttack(i);
-                    if (player.level >= attack.minLevel && player.level <= attack.maxLevel) {
-			// If the player doesn't already have the attack, add it to the list
-			if (player.attacks.at(i).id != parseAttack(i).id) {
-                        	cout << index << ". " << attack.name << " Cost: " << attack.cost << endl;
-                       		rIndexes.push_back(i);
-                        	index++;
-			}
+                    if ((player.level >= attack.minLevel && player.level <= attack.maxLevel) && (find(player.attacks.begin(), player.attacks.end(), i) == player.attacks.end())) {
+                        cout << index << ". " << attack.name << " Cost: " << attack.cost << endl;
+                        rIndexes.push_back(i);
+                        index++;
                     }
                 }
 
